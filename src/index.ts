@@ -3,7 +3,7 @@ import {createCamera} from './camera';
 import {createRenderer} from './renderer';
 import {createFloor} from './floor';
 import {createGrid} from './grid';
-import {moveForward} from './movement';
+import * as Movement from './movement';
 import * as THREE from 'three';
 
 const gameScene: HTMLElement | null  = document.getElementById("game-scene");
@@ -22,17 +22,33 @@ const grid: THREE.GridHelper = createGrid(100, 100);
 scene.add(floor);
 scene.add(grid);
 
+Movement.initCameraRotation(camera);
 
-window.addEventListener("keydown", (e: KeyboardEvent)=>{
-    if (e.code === "KeyW"){
-        moveForward(camera);
+
+const keys: Record<string, boolean> = {};
+
+window.addEventListener("keydown", (e: KeyboardEvent) => {
+    keys[e.code] = true;
+});
+
+window.addEventListener("keyup", (e: KeyboardEvent) => {
+    keys[e.code] = false;
+});
+
+renderer.domElement.addEventListener('click', () => {
+    renderer.domElement.requestPointerLock();
+});
+
+window.addEventListener('mousemove', (e: MouseEvent) => {
+    if (document.pointerLockElement === renderer.domElement) {
+        Movement.rotateCamera(camera, e.movementX, e.movementY);
     }
-    
 });
 
 
 function gameLoop(): void{
     requestAnimationFrame(gameLoop);
+    Movement.checkKeys(keys, camera);
     renderer.render(scene, camera);
 }
 
