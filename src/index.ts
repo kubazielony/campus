@@ -3,6 +3,7 @@ import {createCamera} from './camera';
 import {createRenderer} from './renderer';
 import {createFloor} from './floor';
 import {createGrid} from './grid';
+import {moveForward} from './movement';
 import * as THREE from 'three';
 
 const gameScene: HTMLElement | null  = document.getElementById("game-scene");
@@ -20,6 +21,15 @@ const grid: THREE.GridHelper = createGrid(100, 100);
 
 scene.add(floor);
 scene.add(grid);
+
+
+window.addEventListener("keydown", (e: KeyboardEvent)=>{
+    if (e.code === "KeyW"){
+        moveForward(camera);
+    }
+    
+});
+
 
 function gameLoop(): void{
     requestAnimationFrame(gameLoop);
