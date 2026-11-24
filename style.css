@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#game-scene {
+  width: 100vw;
+  height: 100vh;
+  min-width: 1200px;
+  min-height: 700px;
+  border: none;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#game-scene canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
